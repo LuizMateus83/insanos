@@ -1,0 +1,1354 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070707">
+  <title>Insano Burgers & Pizzas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070707;
+      --surface: #111;
+      --text: #f7f7f7;
+      --muted: #a2a2a2;
+      --line: #292929;
+      --accent: #f5c400;
+      --green: #20d66b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      width: 100%;
+      max-width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .topbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7,7,7,.96);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border: 2px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      flex-shrink: 0;
+    }
+
+    .brand strong {
+      display: block;
+      font-family: Anton, sans-serif;
+      font-size: 21px;
+      letter-spacing: .7px;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 8px;
+      color: #bbb;
+      letter-spacing: 1.5px;
+    }
+
+    .mini-order {
+      background: var(--accent);
+      color: #080808;
+      padding: 9px 15px;
+      border-radius: 9px;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .hero {
+      min-height: 610px;
+      display: flex;
+      align-items: flex-end;
+      padding: 40px 20px 46px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 75% 25%,rgba(245,196,0,.20),transparent 27%),
+        linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.96)),
+        radial-gradient(circle at 50% 45%,#343434 0,#171717 40%,#070707 75%);
+    }
+
+    .hero::after {
+      content: "🍔";
+      position: absolute;
+      right: -28px;
+      top: 105px;
+      font-size: 170px;
+      filter: grayscale(1);
+      opacity: .08;
+      transform: rotate(12deg);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 560px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge, .eyebrow, .tag {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.7px;
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: Anton, sans-serif;
+      font-size: 58px;
+      line-height: .98;
+      text-transform: uppercase;
+      margin: 12px 0 17px;
+      letter-spacing: .5px;
+      overflow-wrap: break-word;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: #c7c7c7;
+      font-size: 15px;
+      max-width: 380px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #090909;
+    }
+
+    .btn-outline {
+      border: 1px solid #555;
+      background: #111;
+    }
+
+    .status {
+      font-size: 11px;
+      color: #bdbdbd;
+    }
+
+    .status i {
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+      background: var(--green);
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .quick-info {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .quick-info > div {
+      padding: 18px 8px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .quick-info > div:last-child {
+      border: 0;
+    }
+
+    .quick-info b {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .quick-info small {
+      font-size: 9px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .section {
+      padding: 65px 18px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section-head {
+      margin-bottom: 25px;
+    }
+
+    .section-head h2, .cta h2, .hours h2 {
+      font-family: Anton, sans-serif;
+      text-transform: uppercase;
+      font-size: 38px;
+      line-height: 1.05;
+      margin-top: 6px;
+    }
+
+    .section-head p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 7px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 3px;
+      margin-bottom: 17px;
+      scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: #aaa;
+      border-radius: 100px;
+      padding: 9px 14px;
+      white-space: nowrap;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: #080808;
+      border-color: var(--accent);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 13px;
+    }
+
+    .product {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .product-image {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      background:
+        radial-gradient(circle at 50% 30%,rgba(245,196,0,.22),transparent 35%),
+        linear-gradient(135deg,#292929,#0b0b0b);
+    }
+
+    .product-image.second {
+      background: linear-gradient(135deg,#151515,#343434);
+    }
+
+    .product-body {
+      padding: 16px;
+    }
+
+    .product h3 {
+      font-size: 19px;
+      margin: 5px 0;
+    }
+
+    .product p {
+      font-size: 12px;
+      color: #aaa;
+      min-height: 54px;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .product-footer strong {
+      font-size: 11px;
+      color: #ddd;
+    }
+
+    .product-order {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      padding: 7px;
+    }
+
+    .cta {
+      margin: 0 18px 20px;
+      padding: 28px 22px;
+      border-radius: 18px;
+      background: linear-gradient(145deg,#1d1d1d,#0e0e0e);
+      border: 1px solid #303030;
+    }
+
+    .cta h2 {
+      font-size: 42px;
+    }
+
+    .cta h2 span {
+      color: var(--accent);
+    }
+
+    .cta p {
+      color: #aaa;
+      font-size: 12px;
+      margin: 7px 0 20px;
+    }
+
+    .about {
+      padding-top: 50px;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 19px;
+    }
+
+    .about-card span {
+      font-size: 24px;
+    }
+
+    .about-card h3 {
+      margin: 5px 0;
+      font-size: 15px;
+    }
+
+    .about-card p {
+      font-size: 11px;
+      color: #999;
+    }
+
+    .hours {
+      margin: 0 18px 55px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      background: var(--surface);
+    }
+
+    .hours-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .hours h2 {
+      font-size: 24px;
+    }
+
+    .hours p {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px 85px;
+      border-top: 1px solid var(--line);
+      background: #050505;
+    }
+
+    .footer-logo {
+      font-size: 40px;
+    }
+
+    footer h3 {
+      font-family: Anton, sans-serif;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    footer p {
+      color: #888;
+      font-size: 11px;
+    }
+
+    footer > a {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 13px;
+    }
+
+    footer small {
+      display: block;
+      color: #555;
+      font-size: 9px;
+      margin-top: 25px;
+    }
+
+    .floating-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green);
+      color: #05130a;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 8px 30px rgba(0,0,0,.5);
+      z-index: 30;
+    }
+
+    /* MODAL DO PEDIDO */
+
+    .order-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background: rgba(0,0,0,.82);
+      backdrop-filter: blur(7px);
+      overflow-y: auto;
+    }
+
+    .order-modal.open {
+      display: flex;
+    }
+
+    .order-box {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #111;
+      color: #f7f7f7;
+      border: 1px solid #303030;
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      animation: orderAppear .25s ease;
+    }
+
+    @keyframes orderAppear {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #242424;
+      color: #fff;
+      font-size: 27px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .order-header {
+      text-align: center;
+      padding: 28px 20px 22px;
+      border-bottom: 1px solid #292929;
+      background: radial-gradient(circle at 50% 0%,rgba(245,196,0,.13),transparent 70%);
+    }
+
+    .order-icon {
+      display: inline-flex;
+      width: 54px;
+      height: 54px;
+      align-items: center;
+      justify-content: center;
+      background: #242424;
+      border: 1px solid #393939;
+      border-radius: 16px;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .order-label {
+      color: var(--accent);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .order-header h2 {
+      font-family: Anton, sans-serif;
+      text-transform: uppercase;
+      font-size: 29px;
+      margin: 5px 0;
+    }
+
+    .selected-product {
+      color: #bcbcbc;
+      font-size: 13px;
+    }
+
+    .order-content {
+      padding: 22px;
+    }
+
+    .order-content h3 {
+      font-size: 14px;
+      margin-bottom: 13px;
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 9px;
+    }
+
+    .payment-option {
+      position: relative;
+      min-width: 0;
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 5px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 13px;
+      color: #ccc;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .payment-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .payment-icon {
+      font-size: 25px;
+    }
+
+    .payment-option:has(input:checked) {
+      border-color: var(--accent);
+      background: rgba(245,196,0,.09);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .change-section {
+      display: none;
+      margin-top: 23px;
+      padding-top: 20px;
+      border-top: 1px solid #292929;
+    }
+
+    .change-section.visible {
+      display: block;
+    }
+
+    .change-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .change-options label {
+      display: block;
+      cursor: pointer;
+    }
+
+    .change-options input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .change-options span {
+      display: block;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #333;
+      border-radius: 10px;
+      background: #1a1a1a;
+      color: #ccc;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .change-options input:checked + span {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(245,196,0,.09);
+    }
+
+    .change-value {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .change-value.visible {
+      display: block;
+    }
+
+    .change-value label {
+      display: block;
+      font-size: 12px;
+      color: #ccc;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .money-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a1a1a;
+      border: 1px solid #393939;
+      border-radius: 10px;
+      padding: 0 13px;
+    }
+
+    .money-input span {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .money-input input {
+      width: 100%;
+      min-width: 0;
+      height: 45px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .send-order {
+      display: flex;
+      width: 100%;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #080808;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .send-order span {
+      font-size: 19px;
+    }
+
+    .order-note {
+      text-align: center;
+      color: #888;
+      font-size: 10px;
+      margin-top: 12px;
+    }
+
+    .order-error {
+      color: #ff7777;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 380px) {
+      .topbar {
+        padding: 10px 12px;
+      }
+
+      .brand {
+        gap: 7px;
+      }
+
+      .brand-logo {
+        width: 43px;
+        height: 43px;
+      }
+
+      .brand strong {
+        font-size: 18px;
+      }
+
+      .brand span {
+        font-size: 7px;
+      }
+
+      .mini-order {
+        padding: 8px 11px;
+        font-size: 11px;
+      }
+
+      .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .hero h1 {
+        font-size: 49px;
+      }
+
+      .hero-actions {
+        gap: 7px;
+      }
+
+      .btn {
+        padding: 0 13px;
+        font-size: 12px;
+      }
+
+      .section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .cta, .hours {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      .floating-wa {
+        right: 14px;
+        bottom: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .order-modal {
+        padding: 10px;
+      }
+
+      .order-box {
+        max-height: 94vh;
+        border-radius: 18px;
+      }
+
+      .order-content {
+        padding: 18px;
+      }
+    }
+
+    @media (min-width: 700px) {
+      .topbar {
+        padding: 10px 5%;
+        height: 78px;
+      }
+
+      .hero {
+        padding: 70px 8%;
+        min-height: 650px;
+      }
+
+      .hero h1 {
+        font-size: 78px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: repeat(3,1fr);
+      }
+
+      .cta, .hours {
+        max-width: 964px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <div class="brand-logo">🍔</div>
+      <div>
+        <strong>INSANO</strong>
+        <span>BURGERS & PIZZAS</span>
+      </div>
+    </a>
+
+    <a class="mini-order" href="#cardapio">Pedir</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="badge">🍔 DELIVERY PIRACURUCA</span>
+
+        <h1>
+          É tão bom que chega a ser
+          <span>INSANO.</span>
+        </h1>
+
+        <p>
+          Hambúrgueres e pizzas preparados para transformar
+          sua fome em uma experiência incrível.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#cardapio" class="btn btn-primary">
+            Fazer pedido
+          </a>
+
+          <a href="#cardapio" class="btn btn-outline">
+            Ver cardápio
+          </a>
+        </div>
+
+        <div class="status">
+          <i></i> Peça pelo WhatsApp
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-info">
+      <div>
+        <b>🍔</b>
+        Burgers
+        <small>Feitos para surpreender</small>
+      </div>
+
+      <div>
+        <b>🍕</b>
+        Pizzas
+        <small>Para compartilhar</small>
+      </div>
+
+      <div>
+        <b>🛵</b>
+        Delivery
+        <small>Peça sem sair de casa</small>
+      </div>
+    </section>
+
+    <section class="section" id="cardapio">
+      <div class="section-head">
+        <span class="eyebrow">ESCOLHA O SEU FAVORITO</span>
+        <h2>Nosso cardápio</h2>
+        <p>Escolha o produto e monte seu pedido.</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-filter="todos">Todos</button>
+        <button class="tab" data-filter="burger">Burgers</button>
+        <button class="tab" data-filter="pizza">Pizzas</button>
+      </div>
+
+      <div class="products">
+
+        <article class="product" data-category="burger">
+          <div class="product-image">🍔</div>
+          <div class="product-body">
+            <span class="tag">BURGER</span>
+            <h3>Insano Burger</h3>
+            <p>Consulte os ingredientes e detalhes diretamente com a loja.</p>
+            <div class="product-footer">
+              <strong>Consultar preço</strong>
+              <button class="product-order" data-product="Insano Burger">
+                Pedir →
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-category="burger">
+          <div class="product-image second">🍔</div>
+          <div class="product-body">
+            <span class="tag">BURGER</span>
+            <h3>Burger Especial</h3>
+            <p>Consulte os ingredientes e detalhes diretamente com a loja.</p>
+            <div class="product-footer">
+              <strong>Consultar preço</strong>
+              <button class="product-order" data-product="Burger Especial">
+                Pedir →
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-category="pizza">
+          <div class="product-image">🍕</div>
+          <div class="product-body">
+            <span class="tag">PIZZA</span>
+            <h3>Pizza Calabresa</h3>
+            <p>Consulte tamanhos, ingredientes e detalhes com a loja.</p>
+            <div class="product-footer">
+              <strong>Consultar preço</strong>
+              <button class="product-order" data-product="Pizza Calabresa">
+                Pedir →
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product" data-category="pizza">
+          <div class="product-image second">🍕</div>
+          <div class="product-body">
+            <span class="tag">PIZZA</span>
+            <h3>Pizza Mussarela</h3>
+            <p>Consulte tamanhos, ingredientes e detalhes com a loja.</p>
+            <div class="product-footer">
+              <strong>Consultar preço</strong>
+              <button class="product-order" data-product="Pizza Mussarela">
+                Pedir →
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="cta">
+      <span class="eyebrow">BATEU A FOME?</span>
+      <h2>Não pensa muito. <span>PEDE LOGO.</span></h2>
+      <p>Escolha seu pedido no cardápio e finalize pelo WhatsApp.</p>
+      <a href="#cardapio" class="btn btn-primary">Ver cardápio</a>
+    </section>
+
+    <section class="section about">
+      <div class="section-head">
+        <span class="eyebrow">POR QUE ESCOLHER A INSANO?</span>
+        <h2>Feito para você</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <span>🔥</span>
+          <h3>Sabor</h3>
+          <p>Uma opção para matar sua fome e aproveitar cada mordida.</p>
+        </div>
+
+        <div class="about-card">
+          <span>🍔</span>
+          <h3>Qualidade</h3>
+          <p>Produtos preparados com atenção aos detalhes.</p>
+        </div>
+
+        <div class="about-card">
+          <span>🛵</span>
+          <h3>Praticidade</h3>
+          <p>Faça seu pedido sem precisar sair de casa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hours">
+      <div class="hours-icon">🕒</div>
+      <div>
+        <h2>Horário de atendimento</h2>
+        <p>Terça a domingo, das 19h às 23h.</p>
+        <p>Confirme a disponibilidade pelo WhatsApp.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-logo">🍔</div>
+    <h3>INSANO BURGERS & PIZZAS</h3>
+    <p>Piracuruca - PI</p>
+    <p>WhatsApp: (86) 99812-0969</p>
+    <a href="#cardapio">Fazer pedido</a>
+    <small>© 2026 Insano Burgers & Pizzas</small>
+  </footer>
+
+  <a
+    class="floating-wa"
+    href="https://wa.me/5586998120969"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Conversar pelo WhatsApp"
+  >✆</a>
+
+  <!-- MODAL DE PEDIDO -->
+
+  <div class="order-modal" id="orderModal" aria-hidden="true">
+    <div class="order-box" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+
+      <button class="close-modal" id="closeModal" type="button" aria-label="Fechar">
+        &times;
+      </button>
+
+      <div class="order-header">
+        <span class="order-icon">🍔</span>
+        <p class="order-label">INSANO BURGERS & PIZZAS</p>
+        <h2 id="orderTitle">Finalizar pedido</h2>
+        <p class="selected-product" id="selectedProduct"></p>
+      </div>
+
+      <div class="order-content">
+        <h3>Forma de pagamento?</h3>
+
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="payment" value="Cartão">
+            <span class="payment-icon">💳</span>
+            <span>Cartão</span>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="payment" value="Pix">
+            <span class="payment-icon">💠</span>
+            <span>Pix</span>
+          </label>
+
+          <label class="payment-option">
+            <input type="radio" name="payment" value="Dinheiro">
+            <span class="payment-icon">💵</span>
+            <span>Dinheiro</span>
+          </label>
+        </div>
+
+        <div class="change-section" id="changeSection">
+          <h3>Precisa de troco?</h3>
+
+          <div class="change-options">
+            <label>
+              <input type="radio" name="change" value="Não">
+              <span>Não</span>
+            </label>
+
+            <label>
+              <input type="radio" name="change" value="Sim">
+              <span>Sim</span>
+            </label>
+          </div>
+
+          <div class="change-value" id="changeValue">
+            <label for="changeAmount">Troco para quanto?</label>
+            <div class="money-input">
+              <span>R$</span>
+              <input
+                type="number"
+                id="changeAmount"
+                min="0.01"
+                step="0.01"
+                placeholder="Ex.: 50,00"
+              >
+            </div>
+          </div>
+        </div>
+
+        <p class="order-error" id="orderError" role="alert"></p>
+
+        <button class="send-order" id="sendOrder" type="button">
+          Enviar pedido pelo WhatsApp
+          <span>➜</span>
+        </button>
+
+        <p class="order-note">
+          Você poderá conferir a mensagem antes de enviá-la.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // FILTROS DO CARDÁPIO
+
+    const tabs = document.querySelectorAll('.tab');
+    const products = document.querySelectorAll('.product');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+
+        products.forEach(product => {
+          product.style.display =
+            filter === 'todos' ||
+            product.dataset.category === filter
+              ? ''
+              : 'none';
+        });
+      });
+    });
+
+    // ELEMENTOS DO PEDIDO
+
+    const orderModal = document.getElementById('orderModal');
+    const closeModal = document.getElementById('closeModal');
+    const selectedProduct = document.getElementById('selectedProduct');
+    const changeSection = document.getElementById('changeSection');
+    const changeValue = document.getElementById('changeValue');
+    const changeAmount = document.getElementById('changeAmount');
+    const orderError = document.getElementById('orderError');
+    const sendOrder = document.getElementById('sendOrder');
+
+    let currentProduct = '';
+
+    // ABRIR A JANELA
+
+    document.querySelectorAll('.product-order').forEach(button => {
+      button.addEventListener('click', () => {
+        currentProduct = button.dataset.product;
+        selectedProduct.textContent = currentProduct;
+
+        document.querySelectorAll(
+          'input[name="payment"], input[name="change"]'
+        ).forEach(input => {
+          input.checked = false;
+        });
+
+        changeSection.classList.remove('visible');
+        changeValue.classList.remove('visible');
+        changeAmount.value = '';
+        orderError.textContent = '';
+
+        orderModal.classList.add('open');
+        orderModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // FECHAR A JANELA
+
+    function closeOrderModal() {
+      orderModal.classList.remove('open');
+      orderModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    closeModal.addEventListener('click', closeOrderModal);
+
+    orderModal.addEventListener('click', event => {
+      if (event.target === orderModal) {
+        closeOrderModal();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (
+        event.key === 'Escape' &&
+        orderModal.classList.contains('open')
+      ) {
+        closeOrderModal();
+      }
+    });
+
+    // SELEÇÃO DE PAGAMENTO
+
+    document.querySelectorAll('input[name="payment"]').forEach(input => {
+      input.addEventListener('change', () => {
+        orderError.textContent = '';
+
+        if (input.value === 'Dinheiro' && input.checked) {
+          changeSection.classList.add('visible');
+        } else if (input.checked) {
+          changeSection.classList.remove('visible');
+          changeValue.classList.remove('visible');
+
+          document.querySelectorAll('input[name="change"]').forEach(radio => {
+            radio.checked = false;
+          });
+
+          changeAmount.value = '';
+        }
+      });
+    });
+
+    // SELEÇÃO DE TROCO
+
+    document.querySelectorAll('input[name="change"]').forEach(input => {
+      input.addEventListener('change', () => {
+        orderError.textContent = '';
+
+        if (input.value === 'Sim' && input.checked) {
+          changeValue.classList.add('visible');
+        } else if (input.value === 'Não' && input.checked) {
+          changeValue.classList.remove('visible');
+          changeAmount.value = '';
+        }
+      });
+    });
+
+    // ENVIAR PEDIDO
+
+    sendOrder.addEventListener('click', () => {
+      const payment = document.querySelector(
+        'input[name="payment"]:checked'
+      );
+
+      if (!payment) {
+        orderError.textContent =
+          'Selecione uma forma de pagamento.';
+        return;
+      }
+
+      let changeMessage = '';
+
+      if (payment.value === 'Dinheiro') {
+        const change = document.querySelector(
+          'input[name="change"]:checked'
+        );
+
+        if (!change) {
+          orderError.textContent =
+            'Informe se precisa de troco.';
+          return;
+        }
+
+        if (change.value === 'Sim') {
+          const amount = Number(changeAmount.value);
+
+          if (
+            !changeAmount.value ||
+            !Number.isFinite(amount) ||
+            amount <= 0
+          ) {
+            orderError.textContent =
+              'Informe um valor válido para o troco.';
+            return;
+          }
+
+          changeMessage =
+            `\nTroco para: R$ ${amount.toFixed(2).replace('.', ',')}`;
+        } else {
+          changeMessage = '\nTroco: Não precisa.';
+        }
+      }
+
+      const message =
+        `Olá, boa noite! Gostaria de pedir:\n\n` +
+        `🍔 Pedido: ${currentProduct}\n` +
+        `💳 Forma de pagamento: ${payment.value}` +
+        changeMessage +
+        `\n\nAguardo a confirmação. Obrigado!`;
+
+      const phone = '5586998120969';
+
+      const whatsappURL =
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+      window.open(whatsappURL, '_blank');
+
+      closeOrderModal();
+    });
+  </script>
+
+</body>
+</html>
